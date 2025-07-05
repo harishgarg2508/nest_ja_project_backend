@@ -4,8 +4,6 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
 import { UserRepository } from 'src/repository/user.repository';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { NotFoundError } from 'rxjs';
-import { JwtService } from '@nestjs/jwt';
 import { AuthUtils } from './auth.utils';
 import { Response } from 'express';
 
@@ -31,7 +29,9 @@ export class AuthService {
       throw new Error('username or password is incorrect')
     }
     const token = await this.authUtils.generateToken(user)
-     response.cookie('accessToken',token)
+     response.cookie('accessToken',token,{
+      maxAge:1000*1000
+     })
     console.log('user logged in')
     return {'token' : token}
 

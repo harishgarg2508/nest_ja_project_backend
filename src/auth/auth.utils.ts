@@ -8,8 +8,8 @@ export class AuthUtils{
     async generateToken(user:CreateUserDto){
         const {userId} = user
     
-        const accessToken = await this.jwtService.sign({ userId: user.userId },{
-            secret:process.env.JWT_SECRET
+        const accessToken = await this.jwtService.sign({ userId: user.userId ,},{
+            secret:process.env.JWT_SECRET,
             
         
         })
