@@ -16,9 +16,9 @@ export class AuthService {
 
 
   async loginUser(credentials: CreateUserDto,response:Response) {
-    const{username,password} = credentials
+    const{email,password} = credentials
 
-    const user  = await this.userRepository.findOne({where:{username}})
+    const user  = await this.userRepository.findOne({where:{email}})
     if(!user){
       throw new NotFoundException('user not found');
 
@@ -26,14 +26,18 @@ export class AuthService {
     console.log(user)
     const passwordMatch = await this.bcryptService.comparePassword(password,user.password)
     if(!passwordMatch){
-      throw new Error('username or password is incorrect')
+      throw new Error('email or password is incorrect')
     }
     const token = await this.authUtils.generateToken(user)
      response.cookie('accessToken',token,{
       maxAge:1000*1000
      })
     console.log('user logged in')
-    return {'token' : token}
+    return {'token' :  token,
+  user: {
+    email: user.email,
+    displayName:  user.email.split('@')[0],
+  }}
 
    
   }

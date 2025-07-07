@@ -1,10 +1,11 @@
-import { IsInt, IsString } from "class-validator";
+import { IsEmail, IsInt, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateUserDto {
     @IsInt()
     userId?:number
     @IsString()
-    username:string;
+    @IsEmail()
+    email:string;
 
     @IsString()
     password:string;

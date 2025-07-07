@@ -10,9 +10,9 @@ export class UserService {
     private readonly bcryptService:BcryptService){}
     
   async create(createUserDto: CreateUserDto) {
-    const { username, password } = createUserDto;
+    const { email, password } = createUserDto;
     const hashedPassword = await this.bcryptService.hashPassword(password);
-    return this.userRepository.createUser(username, hashedPassword);
+    return this.userRepository.createUser(email, hashedPassword);
   }
 
   findAll() {
