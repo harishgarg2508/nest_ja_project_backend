@@ -1,6 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import * as dotenv from 'dotenv';
+import { Auth } from 'src/auth/entities/auth.entity';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ const rawDataSourceOptions = {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     synchronize: true,
-    entities: [User],
+    entities: [User,Auth],
 };
 
 export const dataSourceOptions = rawDataSourceOptions as DataSourceOptions;

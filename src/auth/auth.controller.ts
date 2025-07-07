@@ -10,9 +10,9 @@ export class AuthController {
 
   
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('otp')
+  verifyOtp(@Body() otp: CreateAuthDto) {
+    return this.authService.verifyOtp(otp);
   }
 
   @Get(':id')

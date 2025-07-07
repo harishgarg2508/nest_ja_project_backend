@@ -21,11 +21,14 @@ export class UserController {
     return this.authService.loginUser(createUserDto,response)
   }
 
+  @Patch('update-avatar')
+async updateAvatar(@Body() updateData: { email: string; photoUrl: string }) {
+  return this.userService.updateAvatar(updateData);
+}
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
+
+
+  
 
   @Get(':id')
   findOne(@Param('id') id: string) {

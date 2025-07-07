@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from 'src/repository/user.repository';
@@ -15,8 +15,23 @@ export class UserService {
     return this.userRepository.createUser(email, hashedPassword);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async updateAvatar(updateData: { email: string; photoUrl: string }) {
+      const { email, photoUrl } = updateData;
+  
+  const user = await this.userRepository.findOne({ where: { email } });
+  
+  if (!user) {
+    throw new NotFoundException('User not found');
+  }
+  
+  user.photoUrl = photoUrl;
+  const updatedUser = await this.userRepository.save(user);
+  
+  return {
+    success: true,
+    photoUrl: updatedUser.photoUrl,
+    message: 'Avatar updated successfully',
+  };
   }
 
   findOne(id: number) {
