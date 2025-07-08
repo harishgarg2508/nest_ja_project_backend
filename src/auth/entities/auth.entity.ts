@@ -1,5 +1,5 @@
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 @Entity('auth')
 export class Auth {
 
@@ -11,7 +11,7 @@ export class Auth {
   
     @Column({default: false})
     IsVerified: boolean;
-
+    
     @OneToOne(() => User, user => user.auth)
     user: User;
   

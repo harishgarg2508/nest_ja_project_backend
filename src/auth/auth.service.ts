@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
 import { UserRepository } from 'src/repository/user.repository';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { AuthUtils } from './auth.utils';
 import { Response } from 'express';
 import { MailRepository } from 'src/repository/mail.repository';
-import { isEmail } from 'class-validator';
 
 @Injectable()
 export class AuthService {
@@ -21,10 +19,9 @@ export class AuthService {
   async loginUser(credentials: CreateUserDto, response: Response) {
   const { email, password } = credentials;
 
-  // Load the user with the auth relation
   const user = await this.userRepository.findOne({ 
     where: { email },
-    relations: ['auth'] // Add this to load the auth relation
+    relations: ['auth'] 
   });
   
   if (!user) {
@@ -45,10 +42,7 @@ export class AuthService {
   const token = await this.authUtils.generateToken(user);
   
   response.cookie('accessToken', token, {
-    maxAge: 1000 * 60 * 60 * 24, // 24 hours in milliseconds
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    maxAge: 1000 * 60 * 60 * 24, 
   });
   
   console.log('User logged in');
@@ -59,24 +53,13 @@ export class AuthService {
       email: user.email,
       displayName: user.email.split('@')[0],
       photoURL: user.photoUrl || null,
-      isEmailVerified: user.auth?.IsVerified || false, // Using optional chaining
+      isEmailVerified: user.auth?.IsVerified, 
     },
   };
 }
 
   verifyOtp(otp: CreateAuthDto) {
-    return this.mailRepository.findOtp(otp); // Example OTP, replace with actual logic
+    return this.mailRepository.findOtp(otp);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
 }

@@ -5,7 +5,8 @@ import { CreateAuthDto } from "src/auth/dto/create-auth.dto";
 
 @Injectable()
 export class MailRepository extends Repository<Auth>{
-    constructor(private readonly dataSource:DataSource){
+    constructor(private readonly dataSource:DataSource,
+    ){
         super(Auth,dataSource.createEntityManager())
     }
     
@@ -14,7 +15,7 @@ export class MailRepository extends Repository<Auth>{
         const verification = this.create({
             otp: otp.otp
         })
-        
+    
         await this.save(verification);
         return { message: 'OTP saved successfully'};
 
@@ -26,6 +27,7 @@ export class MailRepository extends Repository<Auth>{
         if (!verification) {
             throw new Error('OTP not found');
         }
+
         verification.IsVerified = true;
         await this.save(verification);
         return { message: 'verification successful' };

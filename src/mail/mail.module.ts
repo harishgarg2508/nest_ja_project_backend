@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import mailConfig from 'src/config/mailConfig';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailRepository } from 'src/repository/mail.repository';
+import { UserRepository } from 'src/repository/user.repository';
 
 @Module({
   imports: [
