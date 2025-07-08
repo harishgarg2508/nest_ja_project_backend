@@ -1,0 +1,10 @@
+DATABASE_TYPE=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=harish
+DATABASE_PASSWORD=harish
+DATABASE_NAME=postgres
+JWT_SECRET=harish
+MAIL_USER=harishgarg.tech@gmail.com
+MAIL_PASSWORD=mjfefjrpcuylqvke
+MAIL_HOST=smtp.gmail.com

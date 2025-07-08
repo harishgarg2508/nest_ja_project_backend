@@ -22,7 +22,7 @@ export class UserController {
   }
 
   @Patch('update-avatar')
-async updateAvatar(@Body() updateData: { email: string; photoUrl: string }) {
+  async updateAvatar(@Body() updateData: { email: string; photoUrl: string }) {
   return this.userService.updateAvatar(updateData);
 }
 
