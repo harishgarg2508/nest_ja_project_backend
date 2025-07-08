@@ -14,6 +14,10 @@ export class Auth {
     
     @OneToOne(() => User, user => user.auth)
     user: User;
+
+    markAsVerified() {
+        this.IsVerified = true;
+    }
   
     
 }

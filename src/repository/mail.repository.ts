@@ -28,7 +28,8 @@ export class MailRepository extends Repository<Auth>{
             throw new Error('OTP not found');
         }
 
-        verification.IsVerified = true;
+        // verification.IsVerified = true;
+        verification.markAsVerified(); // Assuming markAsVerified is a method in the Auth entity
         await this.save(verification);
         return { message: 'verification successful' };
     }
